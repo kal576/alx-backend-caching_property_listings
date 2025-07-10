@@ -3,7 +3,7 @@ from .models import Property
 import logging
 from django_redis import get_redis_connetion
 
-def get_all_properties():
+def get_redis_cache_metrics():
     try:
         conn = get_redis_connection("default")
         info = conn.info()
@@ -12,7 +12,7 @@ def get_all_properties():
         misses = info.get("keyspace_misses", 0)
         total = hits + misses
 
-        hit_ratio = (hit / total) if total > 0 else 0.0
+        hit_ratio = (hit / total) if total > 0 else 0
 
         metrics = {
                 "hits": hits,
