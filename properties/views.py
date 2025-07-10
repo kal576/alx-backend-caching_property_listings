@@ -1,13 +1,11 @@
-#property view that caches the response in Redis for 15 minutes
+#property view that caches the response in Redis for 1 hour
 
-from django.shortcuts import render
-from .models import Property
+from .utils import get_all_properties
 from django.views.decorators.cache import cache_page
 from django.http import JsonResponse
 
-@cache_page(60 * 15)
 def property_list(request):
-    properties = Property.objects.all().values
+    properties = get_all_properties()
     return JsonResponse({
         "data": list(properties)
         })
